@@ -16,7 +16,7 @@
                 <th>Lastname</th>
                 <th>age</th>
                 <th>email</th>
-                <th>role</th>
+                <th>roles</th>
                 <th>action</th>
             </tr>
         </thead>
@@ -29,7 +29,7 @@
                 <td th:text = "${user.getAge()}"> </td>
                 <td th:text = "${user.getEmail()}"> </td>
                 <td>
-                    <block th:each = "role : ${user.getRole()}">
+                    <block th:each = "role : ${user.getRoles()}">
                         <pre th:text="*{role.getRolename()}"></pre>
                     </block>
                 </td>

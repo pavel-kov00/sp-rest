@@ -11,10 +11,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String role;
+    private String role;        // для spring security, запись как - ROLE_ADMIN
 
     @Column(name="role_name")
-    private String rolename;
+    private String rolename;   // для красивого отображения - Admin
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="user_role"
@@ -28,6 +28,10 @@ public class Role {
     public Role(String role, String rolename) {
         this.role = role;
         this.rolename = rolename;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getRole() {

@@ -17,11 +17,13 @@ public class User {
     private String lastname;
     private int age;
     private String email;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL
+            //            ,fetch = FetchType.EAGER)
+    )
     @JoinTable(name="user_role"
             , joinColumns = @JoinColumn(name="user_id")
             , inverseJoinColumns = @JoinColumn(name="role_id"))
-    private List<Role> role;
+    private List<Role> roles = new ArrayList<>();
 
     public User() {}
 
@@ -85,19 +87,16 @@ public class User {
         this.age = age;
     }
 
-    public List<Role> getRole() {
-        return this.role;
+    public List<Role> getRoles() {
+        return this.roles;
     }
 
-    public void setRole(List<Role> role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public void addRole(Role role){
-        if (this.role == null) {
-            this.role = new ArrayList<>();
-        }
-        this.role.add(role);
+        this.roles.add(role);
     }
 
     @Override
@@ -107,7 +106,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", age=" + age +
-                ", role='" + role + '\'' +
+                ", roles='" + roles + " " + '\'' +
                 '}';
     }
 

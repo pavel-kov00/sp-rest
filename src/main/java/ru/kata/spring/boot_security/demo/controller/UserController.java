@@ -2,14 +2,15 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.security.PersonDetails;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.List;
@@ -18,10 +19,12 @@ import java.util.List;
 @RequestMapping("/")
 public class UserController {
 
+    private final RoleService roleService;
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(RoleService roleService, UserService userService) {
+        this.roleService = roleService;
         this.userService = userService;
     }
 
@@ -46,12 +49,16 @@ public class UserController {
 
     @GetMapping("/edit/{id}")
     public String updateUser(@PathVariable("id") long id,Model model){
+        List<Role> roles = roleService.getallrole();
+        model.addAttribute("allroles",roles);
         model.addAttribute("user",userService.getUser(id));
         return "edit";
     }
 
     @PatchMapping("/edit/{id}")
     public String updateUserPost(@ModelAttribute User user,@PathVariable("id") long id){
+        Role role = roleService.getRolebyId(1);
+        user.addRole(role);
         userService.updateUser(user,id);
         return "redirect:/";
     }
@@ -62,12 +69,13 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/ss")
-    public String getss(){
+    @GetMapping("/user")
+    public String getss(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
         System.out.println(personDetails.getUser());
-        return "hello";
+        model.addAttribute("user",personDetails.getUser());
+        return "user";
     }
 
 //    @GetMapping("/addRole")

@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao{
         user.setLastname(us.getLastname());
         user.setAge(us.getAge());
         user.setEmail(us.getEmail());
-        user.setRole(us.getRole());
+        user.setRoles(us.getRoles());
         entityManager.persist(user);
     }
 
