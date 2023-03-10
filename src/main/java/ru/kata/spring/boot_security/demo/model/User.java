@@ -3,7 +3,9 @@ package ru.kata.spring.boot_security.demo.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users_2")
@@ -17,12 +19,14 @@ public class User {
     private String lastname;
     private int age;
     private String email;
-    @ManyToMany(cascade = CascadeType.ALL
-            //            ,fetch = FetchType.EAGER)
-    )
-    @JoinTable(name="user_role"
-            , joinColumns = @JoinColumn(name="user_id")
-            , inverseJoinColumns = @JoinColumn(name="role_id"))
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="user_id")
+//    @ManyToMany(cascade = CascadeType.PERSIST
+//                        ,fetch = FetchType.EAGER
+//    )
+//    @JoinTable(name="user_role"
+//            , joinColumns = @JoinColumn(name="user_id")
+//            , inverseJoinColumns = @JoinColumn(name="role_id"))
     private List<Role> roles = new ArrayList<>();
 
     public User() {}
@@ -106,7 +110,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", age=" + age +
-                ", roles='" + roles + " " + '\'' +
+                ", roles='" + roles.toString()  + '\'' +
                 '}';
     }
 

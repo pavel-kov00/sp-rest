@@ -7,13 +7,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.security.PersonDetails;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
+
+//import static sun.net.www.http.HttpClient.logger;
+
 
 @Controller
 @RequestMapping("/")
@@ -56,10 +62,13 @@ public class UserController {
     }
 
     @PatchMapping("/edit/{id}")
-    public String updateUserPost(@ModelAttribute User user,@PathVariable("id") long id){
-        Role role = roleService.getRolebyId(1);
-        user.addRole(role);
-        userService.updateUser(user,id);
+    public String updateUserPost(@ModelAttribute User user,@PathVariable("id") long id,Model model){
+//      Role role = roleService.getRolebyId(1);
+//      user.addRole(role);
+//      userService.updateUser(user,id);
+        System.out.println(model.getAttribute("allroles"));
+//        System.out.println(user.getRoles());
+
         return "redirect:/";
     }
 
@@ -70,12 +79,33 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String getss(Model model){
+    public String getUser(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
         System.out.println(personDetails.getUser());
         model.addAttribute("user",personDetails.getUser());
         return "user";
+    }
+
+    @GetMapping("/ss")
+    public String getss(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        personDetails.getUser().addRole(roleService.getRolebyId(1));
+        System.out.println(personDetails.getUser());
+        return "user";
+    }
+
+    @GetMapping("/error")
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleError(HttpServletRequest req, Exception ex) {
+//        logger.error("Request: " + req.getRequestURL() + " raised " + ex);
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("exception", ex);
+        mav.addObject("url", req.getRequestURL());
+        mav.setViewName("error");
+        return mav;
     }
 
 //    @GetMapping("/addRole")

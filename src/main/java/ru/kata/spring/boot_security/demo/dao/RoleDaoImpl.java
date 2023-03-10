@@ -2,11 +2,11 @@ package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class RoleDaoImpl implements RoleDao{
@@ -15,11 +15,10 @@ public class RoleDaoImpl implements RoleDao{
     private EntityManager entityManager;
     @Override
     public List<Role> getallrole() {
-        return entityManager.createQuery("from Role", Role.class)
-                .getResultList();
+        return entityManager.createQuery("from Role", Role.class).getResultList();
     }
     @Override
-    public Role getRolebyId(int id) {
+    public Role getRolebyId(long id) {
         return entityManager.find(Role.class,id);
     }
 }

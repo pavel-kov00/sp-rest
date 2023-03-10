@@ -3,7 +3,6 @@
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/users_style.css"/>
     <title>edit user</title>
 </head>
 <body>
@@ -24,9 +23,12 @@
 <!--                th:value="${roles}"-->
 <!--                th:field="*{roles}" />-->
 
-    <th:block th:each="role: ${allroles}">
-        <input id="roles" type="checkbox" th:field="*{roles}"
-               th:text="${role.rolename}" th:value="${role.id}" />
+    <th:block th:each="role: ${allroles}" >
+        <input id="roles"
+               type="checkbox"
+               th:field="*{roles}"
+               th:text="${role.rolename}"
+               th:value="${role.id}" />
     </th:block>
 
 <!--    <input type="text" th:field="*{roles}" id="roles" th:value="${user.roles}">-->

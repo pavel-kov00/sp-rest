@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="role")
@@ -9,18 +10,18 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String role;        // для spring security, запись как - ROLE_ADMIN
 
     @Column(name="role_name")
     private String rolename;   // для красивого отображения - Admin
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="user_role"
-    , joinColumns = @JoinColumn(name="role_id")
-    , inverseJoinColumns = @JoinColumn(name="user_id"))
-    private List<User> users;
+//
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name="user_role"
+//    , joinColumns = @JoinColumn(name="role_id")
+//    , inverseJoinColumns = @JoinColumn(name="user_id"))
+//    private Set<User> users;
 
     public Role() {
     }
@@ -30,7 +31,7 @@ public class Role {
         this.rolename = rolename;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -49,4 +50,6 @@ public class Role {
     public void setRolename(String rolename) {
         this.rolename = rolename;
     }
+
+
 }

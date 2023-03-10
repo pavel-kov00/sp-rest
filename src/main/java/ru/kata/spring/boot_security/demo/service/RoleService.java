@@ -7,5 +7,5 @@ import java.util.List;
 public interface RoleService {
     List<Role> getallrole();
 
-    Role getRolebyId(int id);
+    Role getRolebyId(long id);
 }
