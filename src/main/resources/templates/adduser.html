@@ -6,17 +6,26 @@
    <title>add</title>
 </head>
 <body>
-<form th:action="@{/add}"   method="POST" modelAttribute="user">
+<form th:action="@{/add}"   method="POST" modelAttribute="user" th:object="${user}">
     <label for="name">Name</label>
     <input type="text" name="name" id="name">
     <label for="lastname">Lastname</label>
     <input type="text" name="lastname" id="lastname">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
     <label for="age">Age</label>
     <input type="text" name="age" id="age">
     <label for="email">Email</label>
     <input type="text" name="email" id="email">
-    <label for="roles">Role</label>
-    <input type="text" name="roles" id="roles">
+    <label>Role
+        <select id="roles" name="roles" multiple="multiple">
+            <option disabled> please select...</option>
+            <option th:each="role: ${allroles}"
+                    th:text="${role.rolename}"
+                    th:value="${role.id}">
+            </option>
+        </select>
+    </label>
     <input type="submit" value="Add user">
 </form>
 </body>

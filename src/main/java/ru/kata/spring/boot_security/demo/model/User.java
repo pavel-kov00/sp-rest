@@ -1,6 +1,9 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "users_2")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -19,14 +22,18 @@ public class User {
     private String lastname;
     private int age;
     private String email;
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="user_id")
-//    @ManyToMany(cascade = CascadeType.PERSIST
-//                        ,fetch = FetchType.EAGER
-//    )
-//    @JoinTable(name="user_role"
-//            , joinColumns = @JoinColumn(name="user_id")
-//            , inverseJoinColumns = @JoinColumn(name="role_id"))
+//    ********************************************************
+//@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name="user_id")
+//    ********************************************************
+
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE}
+            ,fetch = FetchType.EAGER
+    )
+    @JoinTable(name="user_role"
+            , joinColumns = @JoinColumn(name="user_id")
+            , inverseJoinColumns = @JoinColumn(name="role_id"))
+    @OnDelete(action = OnDeleteAction.NO_ACTION) // чтобы данные в связанной таблице Role не удалялись
     private List<Role> roles = new ArrayList<>();
 
     public User() {}

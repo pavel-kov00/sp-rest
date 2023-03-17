@@ -1,15 +1,17 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name="role")
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String role;        // для spring security, запись как - ROLE_ADMIN
@@ -21,9 +23,14 @@ public class Role {
 //    @JoinTable(name="user_role"
 //    , joinColumns = @JoinColumn(name="role_id")
 //    , inverseJoinColumns = @JoinColumn(name="user_id"))
-//    private Set<User> users;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+    private List<User> users;
 
     public Role() {
+    }
+
+    public Role(String rolename) {
+        this.rolename = rolename;
     }
 
     public Role(String role, String rolename) {
@@ -51,5 +58,8 @@ public class Role {
         this.rolename = rolename;
     }
 
-
+    @Override
+    public String getAuthority() {
+        return getRole();
+    }
 }

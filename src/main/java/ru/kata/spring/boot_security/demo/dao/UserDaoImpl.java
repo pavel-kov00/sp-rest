@@ -48,8 +48,8 @@ public class UserDaoImpl implements UserDao{
         user.setLastname(us.getLastname());
         user.setAge(us.getAge());
         user.setEmail(us.getEmail());
-//        user.setRoles(us.getRoles());
-        user.addRole(new Role("ROLE_ADMIN","Admin"));
+        user.setRoles(us.getRoles());
+//        user.addRole(new Role("ROLE_ADMIN","Admin"));
         entityManager.persist(user);
     }
 //    @Query("select u from User u join fetch u.roles where u.name =:username")

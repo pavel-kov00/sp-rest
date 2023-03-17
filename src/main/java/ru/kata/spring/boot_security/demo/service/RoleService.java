@@ -8,4 +8,6 @@ public interface RoleService {
     List<Role> getallrole();
 
     Role getRolebyId(long id);
+
+    Role getByName(String rolename);
 }

@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
-//import static sun.net.www.http.HttpClient.logger;
+//import static sun.net.www.http.HttpClient.DEFAULT_CONNECT_TIMEOUT;
 
 
 @Controller
@@ -43,7 +44,9 @@ public class UserController {
 
 
     @GetMapping("/add")
-    public String addUser() {
+    public String addUser(Model model) {
+        List<Role> roles = roleService.getallrole();
+        model.addAttribute("allroles",roles);
         return "adduser";
     }
 
@@ -62,13 +65,13 @@ public class UserController {
     }
 
     @PatchMapping("/edit/{id}")
-    public String updateUserPost(@ModelAttribute User user,@PathVariable("id") long id,Model model){
+    public String updateUserPost(@ModelAttribute User user,@PathVariable("id") long id,@RequestParam int lask){
 //      Role role = roleService.getRolebyId(1);
 //      user.addRole(role);
-//      userService.updateUser(user,id);
-        System.out.println(model.getAttribute("allroles"));
-//        System.out.println(user.getRoles());
-
+      userService.updateUser(user,id);
+//        System.out.println(model.getAttribute("allroles"));
+        System.out.println(user.getRoles());
+        System.out.println(lask);
         return "redirect:/";
     }
 
@@ -107,7 +110,5 @@ public class UserController {
         mav.setViewName("error");
         return mav;
     }
-
-//    @GetMapping("/addRole")
 
 }
