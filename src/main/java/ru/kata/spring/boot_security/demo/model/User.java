@@ -28,7 +28,7 @@ public class User {
 //    ********************************************************
 
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE}
-            ,fetch = FetchType.EAGER
+            ,fetch = FetchType.LAZY
     )
     @JoinTable(name="user_role"
             , joinColumns = @JoinColumn(name="user_id")

@@ -8,7 +8,7 @@
 <p th:text="${url}">Failed URL: </p>
 Failed URL: ${url}
 Exception:  ${exception.message}
-<block th:each="items : ${exception.stackTrace}" >
+<block th:each="items : ${exception.printStackTrace()}" >
     <p th:text="${items}" ></p>
 </block>
 </body>

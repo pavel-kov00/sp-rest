@@ -6,6 +6,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.kata.spring.boot_security.demo.utils.StringToRolesConverter;
+//import ru.kata.spring.boot_security.demo.utils.StringToRolesConverter;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
@@ -21,4 +22,5 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry){
         registry.addFormatter(stringToRolesConverter);
     }
+
 }

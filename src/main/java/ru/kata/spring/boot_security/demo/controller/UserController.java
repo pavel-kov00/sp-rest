@@ -17,10 +17,6 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Set;
-
-//import static sun.net.www.http.HttpClient.DEFAULT_CONNECT_TIMEOUT;
-
 
 @Controller
 @RequestMapping("/")
@@ -65,13 +61,9 @@ public class UserController {
     }
 
     @PatchMapping("/edit/{id}")
-    public String updateUserPost(@ModelAttribute User user,@PathVariable("id") long id,@RequestParam int lask){
-//      Role role = roleService.getRolebyId(1);
-//      user.addRole(role);
+    public String updateUserPost(@ModelAttribute User user,@PathVariable("id") long id){
       userService.updateUser(user,id);
-//        System.out.println(model.getAttribute("allroles"));
         System.out.println(user.getRoles());
-        System.out.println(lask);
         return "redirect:/";
     }
 
@@ -110,5 +102,4 @@ public class UserController {
         mav.setViewName("error");
         return mav;
     }
-
 }

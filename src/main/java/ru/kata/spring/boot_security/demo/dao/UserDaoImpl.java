@@ -42,8 +42,6 @@ public class UserDaoImpl implements UserDao{
     public void updateUser(User us, long id) {
 
         User user = getUser(id);
-//        user.addRole((Role) us.getRoles().stream().filter(role -> role.getRolename().equals("Admin")));
-//        user.addRole((Role) us.getRoles().stream().filter(role -> role.getRolename().equals("User")));
         user.setName(us.getName());
         user.setLastname(us.getLastname());
         user.setAge(us.getAge());

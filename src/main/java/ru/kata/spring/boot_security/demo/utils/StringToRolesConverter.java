@@ -31,6 +31,7 @@ public class StringToRolesConverter implements Formatter<List<Role>> {
     public List<Role> parse(String text, Locale locale) throws ParseException {
         List<Role> listRole = new ArrayList<>();
         System.out.println("text from metod parse: " + text);
+        System.out.println(text + "         ***************         ****************         ");
         listRole.add(roleService.getRolebyId(Integer.parseInt(text)));
         if (listRole == null) {
             throw new ParseException("Role not found: " + text, 0);

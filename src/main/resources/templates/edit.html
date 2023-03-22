@@ -17,28 +17,22 @@
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email" th:value="${user.email}">
     <label for="roles" >Role</label>
-<!--    <input type="checkbox" id="roles" name="roles"-->
-<!--        th:each="roles : ${allroles}"-->
-<!--                th:text="${roles.getRolename()}"-->
-<!--                th:value="${roles}"-->
-<!--                th:field="*{roles}" />-->
-<!--    <select id="lask" name="lask">-->
-<!--        <th:block th:each="role: ${allroles}" >-->
-<!--            <input id="roles"-->
-<!--                   type="checkbox"-->
-<!--                   th:field="*{roles}"-->
-<!--                   th:text="${role.rolename}"-->
-<!--                   th:value="${role.id}" />-->
-<!--        </th:block>-->
-<!--    </select>-->
+    <input type="checkbox" id="roles" name="roles"
+        th:each="roles : ${allroles}"
+                th:text="${roles.getRolename()}"
+                th:value="${roles.id}"
+                th:field="*{roles}"/>
 
-        <select id="roles" name="roles">-->
-                <option disabled> please select...</option>
-                <option th:each="role: ${allroles}"
-                        th:text="${role.rolename}"
-                        th:value="${role.id}">
-                </option>
-        </select>
+
+<!--        <select id="roles" name="roles" multiple="multiple">&ndash;&gt;-->
+<!--                <option disabled> please select...</option>-->
+<!--                <option th:each="role: ${allroles}"-->
+<!--                        th:text="${role.rolename}"-->
+<!--                        th:value="${role.id}">-->
+<!--                </option>-->
+<!--        </select>-->
+
+
     <input type="submit" value="update user">
 </form>
 </body>
