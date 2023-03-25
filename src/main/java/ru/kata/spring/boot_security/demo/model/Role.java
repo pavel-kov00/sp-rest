@@ -11,9 +11,10 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name="role")
     private String role;        // для spring security, запись как - ROLE_ADMIN
 
     @Column(name="role_name")

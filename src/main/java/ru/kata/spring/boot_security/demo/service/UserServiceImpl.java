@@ -20,10 +20,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService{
 
     private final UserDao userDao;
+    private final RoleService roleService;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, RoleService roleService) {
         this.userDao = userDao;
+        this.roleService = roleService;
     }
 
     @Override
@@ -51,6 +53,20 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public void updateUser(User user, long id) {
+        List<Role> roles = user.getRoles();
+        for (int i=0;i<roles.size();i++) {
+            System.out.println("***************");
+            System.out.println(roles.get(i).getRolename());
+            System.out.println(roles.get(i).getId());
+            System.out.println(roles.get(i).getRole());
+            roles.set(i,roleService.getByName(roles.get(i).getRolename())); // получаю в этом месте ошибку
+        }
+//        Role role = roleService.getByName("ROLE_ADMIN"); // тестовый вызов ....пишет  ожидается Long
+//       Provided id of the wrong type for class ru.kata.spring.boot_security.demo.model.Role. Expected: class java.lang.Long, got class java.lang.String
+//
+//
+//        System.out.println(role.getRole());
+        user.setRoles(roles);
         userDao.updateUser(user,id);
     }
 
@@ -63,6 +79,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDao.getUserByName(username);
+//        user.setRoles(userDao.getUserByName(username).getRoles());
 
         if (user == null){
             throw new UsernameNotFoundException("User not found!");
@@ -70,6 +87,7 @@ public class UserServiceImpl implements UserService{
         // возвращаем только данные для Security
         return new org.springframework.security.core.userdetails.User(user.getName(),
                 user.getPassword(), mapRoleToAuthorities(user.getRoles()));
+//        return new PersonDetails(user);
     }
 
     private Collection<? extends GrantedAuthority> mapRoleToAuthorities(Collection<Role> roles) {

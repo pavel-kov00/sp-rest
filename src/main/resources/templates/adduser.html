@@ -6,7 +6,7 @@
    <title>add</title>
 </head>
 <body>
-<form th:action="@{/add}"   method="POST" modelAttribute="user" th:object="${user}">
+<form th:action="@{/admin/add}"   method="POST" modelAttribute="user" th:object="${user}">
     <label for="name">Name</label>
     <input type="text" name="name" id="name">
     <label for="lastname">Lastname</label>
@@ -14,18 +14,29 @@
     <label for="password">Password</label>
     <input type="password" name="password" id="password">
     <label for="age">Age</label>
-    <input type="text" name="age" id="age">
+    <input type="text"  name="age" id="age">
     <label for="email">Email</label>
     <input type="text" name="email" id="email">
-    <label>Role
-        <select id="roles" name="roles" multiple="multiple">
-            <option disabled> please select...</option>
-            <option th:each="role: ${allroles}"
-                    th:text="${role.rolename}"
-                    th:value="${role.id}">
-            </option>
-        </select>
-    </label>
+    <label for="roles">Role</label>
+
+
+<!--        <select id="roles" name="roles" multiple="multiple">-->
+<!--            <option disabled> please select...</option>-->
+<!--            <option th:each="role: ${allroles}"-->
+<!--                    th:text="${role.rolename}"-->
+<!--                    th:value="${role.role}"-->
+<!--                    th:id="${role.id}">-->
+<!--            </option>-->
+<!--        </select>-->
+
+        <input type="checkbox" id="roles" name="roles"
+               th:each="roles : ${allroles}"
+               th:text="${roles.getRolename()}"
+               th:value="${roles.role}"
+               th:id="${roles.id}"/>
+<!--               th:field="roles"-->
+
+
     <input type="submit" value="Add user">
 </form>
 </body>

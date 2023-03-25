@@ -21,12 +21,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 //    private final PersonDetailsService personDetailsService;
-//    private final SuccessUserHandler successUserHandler;
+    private final SuccessUserHandler successUserHandler;
 
     @Autowired
-    public WebSecurityConfig(@Lazy UserDetailsService userDetailsService){
+    public WebSecurityConfig(@Lazy UserDetailsService userDetailsService, SuccessUserHandler successUserHandler){
         this.userDetailsService = userDetailsService;
 //        this.authProvider = authProvider;
+        this.successUserHandler = successUserHandler;
     }
 //    public WebSecurityConfig(AuthProviderImpl authProvider, SuccessUserHandler successUserHandler) {
 //
@@ -41,13 +42,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //config authorithe
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/auth/login","/error").permitAll()
+                .antMatchers("/auth/login","/user/error").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/auth/login")
                 .loginProcessingUrl("/process_login")
-                .defaultSuccessUrl("/",true)
                 .failureUrl("/auth/login?error")
+                .successHandler(successUserHandler) // обработчик успешной аутентификации
                 .and()
                 .logout().logoutUrl("/logout")
                 .logoutSuccessUrl("/auth/login");
