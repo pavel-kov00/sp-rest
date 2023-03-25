@@ -36,6 +36,24 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public void addUser(User user) {
+        List<Role> roles = user.getRoles();
+        for (int i=0;i<roles.size();i++) {
+            System.out.println("***************");
+            System.out.println(roles.get(i).getRolename());
+            System.out.println(roles.get(i).getId());
+            System.out.println(roles.get(i).getRole());
+            //моя таблица для красивого отображения , имеет такой вид :
+            // | id  | role       | rolename - то самое поле для красивого отображения
+            // | 1   | ROLE_ADMIN | Admin      |
+            // | 2   | ROLE_USER  | User       |
+            // но из представления обьект Role приходит в таком виде
+            // | id  | role       | rolename   |
+            // | 0   | null       | ROLE_ADMIN |
+            // так как Spring криво мапит (не знаю где ошибка)   , прищлось решать проблему данным способом
+            roles.set(i,roleService.getByName(roles.get(i).getRolename())); //
+        }
+        user.setRoles(roles);
+        System.out.println(user + " /**************/  " + user.getRoles().get(0).getRolename() + " " + user.getRoles().get(0).getRole());
         userDao.addUser(user);
     }
 
@@ -59,7 +77,7 @@ public class UserServiceImpl implements UserService{
             System.out.println(roles.get(i).getRolename());
             System.out.println(roles.get(i).getId());
             System.out.println(roles.get(i).getRole());
-            roles.set(i,roleService.getByName(roles.get(i).getRolename())); // получаю в этом месте ошибку
+            roles.set(i,roleService.getByName(roles.get(i).getRolename())); //
         }
 //        Role role = roleService.getByName("ROLE_ADMIN"); // тестовый вызов ....пишет  ожидается Long
 //       Provided id of the wrong type for class ru.kata.spring.boot_security.demo.model.Role. Expected: class java.lang.Long, got class java.lang.String

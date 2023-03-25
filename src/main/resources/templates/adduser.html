@@ -6,7 +6,8 @@
    <title>add</title>
 </head>
 <body>
-<form th:action="@{/admin/add}"   method="POST" modelAttribute="user" th:object="${user}">
+<!--th:object="${user}"-->
+<form th:action="@{/admin/add}"   method="POST" modelAttribute="user" >
     <label for="name">Name</label>
     <input type="text" name="name" id="name">
     <label for="lastname">Lastname</label>

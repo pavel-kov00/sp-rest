@@ -27,7 +27,6 @@ public class UserDaoImpl implements UserDao{
         entityManager.merge(user);
     }
 
-
     @Override
     public User getUser(long id) {
         return entityManager.find(User.class,id);
