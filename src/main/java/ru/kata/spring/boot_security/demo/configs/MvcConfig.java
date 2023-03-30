@@ -15,13 +15,4 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/admin").setViewName("users");
     }
 
-//
-//    @Autowired
-//    private StringToRolesConverter stringToRolesConverter;
-//
-//    @Override
-//    public void addFormatters(FormatterRegistry registry){
-//        registry.addFormatter(stringToRolesConverter);
-//    }
-
 }

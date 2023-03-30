@@ -3,49 +3,110 @@
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
     <title>Title</title>
 </head>
 <body>
-<a href="/logout"> Logout</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Lastname</th>
-                <th>age</th>
-                <th>email</th>
-                <th>roles</th>
-                <th>action</th>
-            </tr>
-        </thead>
+<header class="navbar navbar-expand navbar-light  bg-dark bd-navbar">
+    <a href="/logout"> Logout</a>
+</header>
 
-        <block th:each = "user : ${users}">
-            <tr>
-                <td th:text = "${user.getId()}"> </td>
-                <td th:text = "${user.getName()}"> </td>
-                <td th:text = "${user.getLastname()}"> </td>
-                <td th:text = "${user.getAge()}"> </td>
-                <td th:text = "${user.getEmail()}"> </td>
-                <td>
-                    <block th:each = "role : ${user.getRoles()}">
-                        <pre th:text="*{role.getRolename()}"></pre>
-                    </block>
-                </td>
-                <td>
-                    <a href="" th:href="@{/admin/edit/{id}(id=${user.id})}">edit</a>
-                    <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
-<!--                        <a href="" th:href="@{/{id}(id=${user.getId()})}" >delete</a>-->
-                        <button type="submit"> delete</button>
-                    </form>
-                </td>
-            </tr>
+<div class="container-fluid">
+    <div class="row flex-xl-nowrap">
+        <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+            <nav>
+                <div class="bd-toc-item ">
+                    <a>Admin</a>
+                </div>
+                <div class="bd-toc-item ">
+                    <a href="/user/">User</a>
+                </div>
+            </nav>
+        </div>
 
-        </block>
-    </table>
-    <a href="/user/">for me</a>
+        <div class="col-md bg-light p-4">
 
-    <h3>Add</h3>
-    <a href="/admin/add">Add new user</a>
+            <h2>Admin panel</h2>
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#tab1">Users table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab2">New user</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+
+                <div class="border tab-pane  fade show active" id="tab1">
+                    <div class="border-bottom p-3"><h5>All users</h5></div>
+                    <div class="bg-white p-3">
+                        <table class="table table-striped ">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Lastname</th>
+                                <th>age</th>
+                                <th>email</th>
+                                <th>roles</th>
+                                <th>action</th>
+                            </tr>
+                            </thead>
+                            <block th:each="user : ${users}">
+                                <tr>
+                                    <td th:text="${user.getId()}"></td>
+                                    <td th:text="${user.getName()}"></td>
+                                    <td th:text="${user.getLastname()}"></td>
+                                    <td th:text="${user.getAge()}"></td>
+                                    <td th:text="${user.getEmail()}"></td>
+                                    <td>
+                                        <block th:each="role : ${user.getRoles()}">
+                                            <pre th:text="*{role.getRolename()}"></pre>
+                                        </block>
+                                    </td>
+                                    <td>
+                                        <a href="" th:href="@{/admin/edit/{id}(id=${user.id})}">edit</a>
+                                        <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}"
+                                              th:object="${user}">
+                                            <!--                        <a href="" th:href="@{/{id}(id=${user.getId()})}" >delete</a>-->
+                                            <button type="submit"> delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                            </block>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="border tab-pane fade " id="tab2">
+                        <div class="border-bottom p-3">
+                            <h5>Add new user</h5>
+                        </div>
+                        <div class="bg-white p-3">
+                            <a href="/admin/add">Add user</a>
+                        </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

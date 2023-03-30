@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void addUser(User user) {
-        entityManager.merge(user);
+        entityManager.persist(user);
     }
 
     @Override
@@ -39,27 +39,14 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void updateUser(User us, long id) {
-
-        User user = getUser(id);
-        user.setName(us.getName());
-        user.setLastname(us.getLastname());
-        user.setAge(us.getAge());
-        user.setEmail(us.getEmail());
-        user.setRoles(us.getRoles());
-//        user.addRole(new Role("ROLE_ADMIN","Admin"));
-        entityManager.persist(user);
+        entityManager.merge(us);
     }
-//    @Query("select u from User u join fetch u.roles where u.name =:username")
+
     @Override
     public User getUserByName(String username){
-        System.out.println(username);
-        try {
             TypedQuery<User> user = (TypedQuery<User>) entityManager.createQuery(
-                            "from User u where u.name = :pname").
+                   "select u from User u left join fetch u.roles where u.name=:pname").
                     setParameter("pname", username);
             return user.getSingleResult();
-        } catch (NoResultException e){
-            return null;
-        }
     }
 }
