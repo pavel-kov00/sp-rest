@@ -20,7 +20,6 @@
     <input type="text" name="email" id="email">
     <label for="roles">Role</label>
 
-
 <!--        <select id="roles" name="roles" multiple="multiple">-->
 <!--            <option disabled> please select...</option>-->
 <!--            <option th:each="role: ${allroles}"-->
@@ -35,8 +34,8 @@
                th:text="${roles.getRolename()}"
                th:value="${roles.role}"
                th:id="${roles.id}"/>
-<!--               th:field="roles"-->
 
+<!--               th:field="roles"-->
 
     <input type="submit" value="Add user">
 </form>
