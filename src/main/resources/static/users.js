@@ -93,11 +93,7 @@ $(document).ready(function () {
  }
 
 
-async function getUser(id) {
-    let url = "http://localhost:8080/api/getUser/" + id;
-    let response = await fetch(url);
-    return await response.json();
-}
+//
 
 // function editUser() {
 //     var formEdit = $(this).data('editForm');
@@ -214,7 +210,7 @@ function addUser(){
     })
         .then(() => {
             document.getElementById('nav-users=tab').click()
-            getUser()
+            getUsers()
         })
 
 }

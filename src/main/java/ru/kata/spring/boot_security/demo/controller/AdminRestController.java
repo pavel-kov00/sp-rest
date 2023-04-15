@@ -45,7 +45,6 @@ public class AdminRestController {
     }
 
     @PutMapping("/edit")
-//    @PathVariable("id") long id,
     public ResponseEntity<HttpStatus> updateUserPost(@RequestBody User user, BindingResult bindingResult){
         if(bindingResult.hasErrors()) {
             throw new RuntimeException("error!");
