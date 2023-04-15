@@ -20,12 +20,10 @@ public class Role implements GrantedAuthority {
     private String role;        // для spring security, запись как - ROLE_ADMIN
 
     @Column(name="role_name")
-    private String rolename;   // для красивого отображения - Admin
-    @ManyToMany(
-//            fetch = FetchType.LAZY,
-            mappedBy = "roles"
-    )
-    private Set<User> users = new HashSet<>();
+    private String rolename;   // для красивого отображения - "Admin"
+    @Transient
+    @ManyToMany( mappedBy = "roles" )
+    private Set<User> users;
 
     public Role() {
     }
@@ -39,6 +37,13 @@ public class Role implements GrantedAuthority {
         this.rolename = rolename;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
     public long getId() {
         return id;
     }
@@ -65,13 +70,8 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+
 
     @Override
     public boolean equals(Object o) {

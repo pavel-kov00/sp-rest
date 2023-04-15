@@ -73,6 +73,7 @@ public class UserServiceImpl implements UserService{
             loger.log(Level.WARNING,role.getRole());
         }
         user.setRoles(roles2);
+        user.setPassword(userDao.getUser(id).getPassword());
         userDao.updateUser(user,id);
     }
 

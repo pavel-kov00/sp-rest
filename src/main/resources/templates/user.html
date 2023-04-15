@@ -35,7 +35,8 @@
                 <div th:each=" role : ${user.getRoles()}" >
                     <div th:if="${role.getRole().contains('ROLE_ADMIN')}">
                         <div class="bd-toc-item">
-                            <a href="/admin/" class="btn btn-block  text-left">Admin</a>
+                            <a href="/admin/"
+                               class="btn btn-block  text-left">Admin</a>
                         </div>
                     </div>
                 </div>
